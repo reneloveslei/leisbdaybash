@@ -29,12 +29,11 @@
   }
 
   #wish {
-    display: none; /* hidden initially */
+    display: none; /* hidden until balloon pops */
     margin-top: 30px;
     background-color: #e6f2ff;
     padding: 20px;
     border-radius: 15px;
-    display: inline-block;
     max-width: 90%;
     text-align: center;
   }
@@ -71,10 +70,10 @@
 <div id="wish">
   <h2>🎉 Birthday Wish 🎉</h2>
   <p>
-    To… my beloved #martini blue truther, the sweetest, most precious, the loveliest wife, nae saranghaneun lei 🥹 happy birthdayyyy wife 🎂🩵🩵🩵… happiest birthday my leilei i love you so much
+    To… my beloved #martini blue truther, the sweetest, most precious, the loveliest wife, nae saranghaneun lei 🥹 happy birthdayyyy wife 🎂🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵 congratulations ure one step closer to becoming an oldkeukeu now 🩵🙏🩵🙏🩵🙏🩵🙏🩵🙏🩵🙏🩵🙏🩵🩵🩵🩵🩵🩵🩵🩵 idgaf if ive said this before but im super super grateful to have known u, and actually have u as one of my jinjja closest friends here… like i really really do appreciate u a lot. just realised i dont say this to u a lot but im truly happier to have u, u make everything 9283827 more fun and all and i really appreciate that ☹️ im just happy i can always bs w u and all that yeah im so comfortable w u and u mean so soooo much to me and i reallyyyyy hope this bond stays forever 🤲🏻🩷 i really hope this year treats u gently w kindness and warmth and i hope u will achieve every single good thing this universe can offer to you 🥺🥺 i hope u eat lots and lotsss of delish foods today and just have fun on ur special day!! stay healthy stay happy stay cool and stay goated as always mi wife i love u so so much and i pray only happiness and good things will come surround u always 🤍🤍🤍❤️‍🩹❤️‍🩹 happiest birthday my leilei i love you so much
   </p>
   <img src="birthday.jpg" alt="Birthday Image">
-  <audio id="birthdayAudio" autoplay>
+  <audio id="birthdayAudio">
     <source src="birthday.mp3" type="audio/mpeg">
   </audio>
 </div>
@@ -92,17 +91,17 @@ balloon.addEventListener('click', () => {
         count++;
         counter.textContent = count;
 
-        // Balloon scales on click
+        // balloon pops up slightly on click
         balloon.style.transform = "scale(1.3)";
         setTimeout(() => {
             balloon.style.transform = "scale(1)";
         }, 100);
 
-        // Pop and show wish when count reaches 23
+        // when counter reaches 23
         if(count === maxClicks){
             balloon.textContent = "💥"; // balloon pops
 
-            // Create confetti
+            // create confetti
             for(let i=0; i<100; i++){
                 const confetti = document.createElement("div");
                 confetti.classList.add("confetti");
@@ -113,7 +112,7 @@ balloon.addEventListener('click', () => {
                 setTimeout(()=>{ confetti.remove(); }, 3000);
             }
 
-            // Delay then show wish + play music
+            // show wish, image, and play music at the same time
             setTimeout(() => {
                 balloon.style.display = 'none';
                 wish.style.display = 'block';
