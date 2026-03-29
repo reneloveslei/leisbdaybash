@@ -19,6 +19,7 @@
     color: #0077ff; /* blue balloon */
     animation: float 2s infinite alternate ease-in-out;
     user-select: none;
+    transition: transform 0.1s ease;
   }
 
   @keyframes float {
@@ -28,7 +29,7 @@
   }
 
   #wish {
-    display: none;
+    display: none; /* hidden initially */
     margin-top: 30px;
     background-color: #e6f2ff;
     padding: 20px;
@@ -44,14 +45,11 @@
     border-radius: 10px;
   }
 
-  /* Confetti */
   .confetti {
     position: fixed;
     width: 10px;
     height: 10px;
-    background-color: #00aaff;
     top: 0;
-    left: 50%;
     pointer-events: none;
     opacity: 0.9;
     z-index: 9999;
@@ -76,7 +74,7 @@
     To… my beloved #martini blue truther, the sweetest, most precious, the loveliest wife, nae saranghaneun lei 🥹 happy birthdayyyy wife 🎂🩵🩵🩵… happiest birthday my leilei i love you so much
   </p>
   <img src="birthday.jpg" alt="Birthday Image">
-  <audio controls autoplay>
+  <audio id="birthdayAudio" autoplay>
     <source src="birthday.mp3" type="audio/mpeg">
   </audio>
 </div>
@@ -87,30 +85,41 @@ const maxClicks = 23;
 const balloon = document.getElementById('balloon');
 const counter = document.getElementById('counter');
 const wish = document.getElementById('wish');
+const audio = document.getElementById('birthdayAudio');
 
 balloon.addEventListener('click', () => {
-    count++;
-    counter.textContent = count;
+    if(count < maxClicks) {
+        count++;
+        counter.textContent = count;
 
-    if(count >= maxClicks){
-        balloon.textContent = "💥"; // balloon pops
+        // Balloon scales on click
+        balloon.style.transform = "scale(1.3)";
+        setTimeout(() => {
+            balloon.style.transform = "scale(1)";
+        }, 100);
 
-        // create confetti
-        for(let i=0; i<100; i++){
-            const confetti = document.createElement("div");
-            confetti.classList.add("confetti");
-            confetti.style.left = Math.random() * window.innerWidth + "px";
-            confetti.style.backgroundColor = `hsl(${Math.random()*240}, 100%, 50%)`;
-            confetti.style.width = confetti.style.height = Math.random()*10+5 + "px";
-            document.body.appendChild(confetti);
-            setTimeout(()=>{ confetti.remove(); }, 3000);
+        // Pop and show wish when count reaches 23
+        if(count === maxClicks){
+            balloon.textContent = "💥"; // balloon pops
+
+            // Create confetti
+            for(let i=0; i<100; i++){
+                const confetti = document.createElement("div");
+                confetti.classList.add("confetti");
+                confetti.style.left = Math.random() * window.innerWidth + "px";
+                confetti.style.backgroundColor = `hsl(${Math.random()*240}, 100%, 50%)`;
+                confetti.style.width = confetti.style.height = Math.random()*10+5 + "px";
+                document.body.appendChild(confetti);
+                setTimeout(()=>{ confetti.remove(); }, 3000);
+            }
+
+            // Delay then show wish + play music
+            setTimeout(() => {
+                balloon.style.display = 'none';
+                wish.style.display = 'block';
+                audio.play();
+            }, 500);
         }
-
-        // show wish after short delay
-        setTimeout(()=>{
-            balloon.style.display = 'none';
-            wish.style.display = 'block';
-        }, 500);
     }
 });
 </script>
