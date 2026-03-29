@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LEI’S 23RD BIRTHDAY BASH</title>
+<style>
+  body {
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #cce7ff;
+    color: #004080;
+    margin-top: 100px;
+    overflow-x: hidden;
+  }
+
+  #balloon {
+    font-size: 100px;
+    cursor: pointer;
+    color: #0077ff; /* blue balloon */
+    animation: float 2s infinite alternate ease-in-out;
+    user-select: none;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+
+  #wish {
+    display: none;
+    margin-top: 30px;
+    background-color: #e6f2ff;
+    padding: 20px;
+    border-radius: 15px;
+    display: inline-block;
+    max-width: 90%;
+    text-align: center;
+  }
+
+  #wish img {
+    max-width: 300px;
+    margin-top: 10px;
+    border-radius: 10px;
+  }
+
+  /* Confetti */
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background-color: #00aaff;
+    top: 0;
+    left: 50%;
+    pointer-events: none;
+    opacity: 0.9;
+    z-index: 9999;
+    animation: fall 3s linear forwards;
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(600px) rotate(360deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Click the Balloon!</h1>
+<div id="balloon">🎈</div>
+<p>Clicks: <span id="counter">0</span></p>
+
+<div id="wish">
+  <h2>🎉 Birthday Wish 🎉</h2>
+  <p>
+    To… my beloved #martini blue truther, the sweetest, most precious, the loveliest wife, nae saranghaneun lei 🥹 happy birthdayyyy wife 🎂🩵🩵🩵… happiest birthday my leilei i love you so much
+  </p>
+  <img src="birthday.jpg" alt="Birthday Image">
+  <audio controls autoplay>
+    <source src="birthday.mp3" type="audio/mpeg">
+  </audio>
+</div>
+
+<script>
+let count = 0;
+const maxClicks = 23;
+const balloon = document.getElementById('balloon');
+const counter = document.getElementById('counter');
+const wish = document.getElementById('wish');
+
+balloon.addEventListener('click', () => {
+    count++;
+    counter.textContent = count;
+
+    if(count >= maxClicks){
+        balloon.textContent = "💥"; // balloon pops
+
+        // create confetti
+        for(let i=0; i<100; i++){
+            const confetti = document.createElement("div");
+            confetti.classList.add("confetti");
+            confetti.style.left = Math.random() * window.innerWidth + "px";
+            confetti.style.backgroundColor = `hsl(${Math.random()*240}, 100%, 50%)`;
+            confetti.style.width = confetti.style.height = Math.random()*10+5 + "px";
+            document.body.appendChild(confetti);
+            setTimeout(()=>{ confetti.remove(); }, 3000);
+        }
+
+        // show wish after short delay
+        setTimeout(()=>{
+            balloon.style.display = 'none';
+            wish.style.display = 'block';
+        }, 500);
+    }
+});
+</script>
+
+</body>
+</html>
