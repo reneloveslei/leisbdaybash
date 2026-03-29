@@ -1,127 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>LEI’S 23RD BIRTHDAY BASH</title>
-<style>
-  body {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    background-color: #cce7ff;
-    color: #004080;
-    margin-top: 100px;
-    overflow-x: hidden;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LEI'S 23RD BIRTHDAY BASH</title>
+    <style>
+        :root {
+            --martini-blue: #004080;
+            --light-blue: #cce7ff;
+            --sky-blue: #0077ff;
+        }
 
-  #balloon {
-    font-size: 100px;
-    cursor: pointer;
-    color: #0077ff; /* blue balloon */
-    animation: float 2s infinite alternate ease-in-out;
-    user-select: none;
-    transition: transform 0.1s ease;
-  }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--light-blue);
+            color: var(--martini-blue);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
 
-  @keyframes float {
-    0% { transform: translateY(0px); }
-    50% { transform: translateY(-20px); }
-    100% { transform: translateY(0px); }
-  }
+        /* Overlay to fix Music Autoplay */
+        #overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--martini-blue);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
 
-  #wish {
-    display: none; /* hidden until balloon pops */
-    margin-top: 30px;
-    background-color: #e6f2ff;
-    padding: 20px;
-    border-radius: 15px;
-    max-width: 90%;
-    text-align: center;
-  }
+        button#start-btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: white;
+            color: var(--martini-blue);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-top: 20px;
+        }
 
-  #wish img {
-    max-width: 300px;
-    margin-top: 10px;
-    border-radius: 10px;
-  }
+        /* Background Balloons */
+        .decor-balloon {
+            position: absolute;
+            bottom: -100px;
+            font-size: 30px;
+            opacity: 0.6;
+            animation: floatUp 10s linear infinite;
+            z-index: 0;
+        }
 
-  .confetti {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    top: 0;
-    pointer-events: none;
-    opacity: 0.9;
-    z-index: 9999;
-    animation: fall 3s linear forwards;
-  }
+        @keyframes floatUp {
+            to { transform: translateY(-120vh) translateX(20px); }
+        }
 
-  @keyframes fall {
-    0% { transform: translateY(0px) rotate(0deg); }
-    100% { transform: translateY(600px) rotate(360deg); opacity: 0; }
-  }
-</style>
+        /* Main Game Section */
+        #game-container {
+            text-align: center;
+            z-index: 10;
+        }
+
+        h1 { font-size: 1.8rem; margin-bottom: 5px; }
+        #counter { font-size: 1.5rem; font-weight: bold; margin-bottom: 20px; }
+
+        #main-balloon {
+            font-size: 150px;
+            cursor: pointer;
+            display: inline-block;
+            transition: transform 0.1s ease;
+            user-select: none;
+        }
+
+        #main-balloon:active { transform: scale(1.2); }
+
+        /* Final Wish Section */
+        #wish-container {
+            display: none;
+            width: 90%;
+            max-width: 500px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            z-index: 20;
+            animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #birthday-pic { 
+            width: 100%; 
+            display: block; 
+        }
+
+        .wish-content {
+            padding: 25px;
+            text-align: left;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #333;
+            white-space: pre-wrap;
+        }
+
+        @keyframes popIn {
+            0% { transform: scale(0); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
 </head>
 <body>
 
-<h1>Click the Balloon!</h1>
-<div id="balloon">🎈</div>
-<p>Clicks: <span id="counter">0</span></p>
+    <div id="overlay">
+        <h1 style="color: white;">LEI'S 23RD BIRTHDAY BASH</h1>
+        <button id="start-btn" onclick="startExperience()">Enter Party 🩵</button>
+    </div>
 
-<div id="wish">
-  <h2>🎉 Birthday Wish 🎉</h2>
-  <p>
-    To… my beloved #martini blue truther, the sweetest, most precious, the loveliest wife, nae saranghaneun lei 🥹 happy birthdayyyy wife 🎂🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵 congratulations ure one step closer to becoming an oldkeukeu now 🩵🙏🩵🙏🩵🙏🩵🙏🩵🙏🩵🙏🩵🙏🩵🩵🩵🩵🩵🩵🩵🩵 idgaf if ive said this before but im super super grateful to have known u, and actually have u as one of my jinjja closest friends here… like i really really do appreciate u a lot. just realised i dont say this to u a lot but im truly happier to have u, u make everything 9283827 more fun and all and i really appreciate that ☹️ im just happy i can always bs w u and all that yeah im so comfortable w u and u mean so soooo much to me and i reallyyyyy hope this bond stays forever 🤲🏻🩷 i really hope this year treats u gently w kindness and warmth and i hope u will achieve every single good thing this universe can offer to you 🥺🥺 i hope u eat lots and lotsss of delish foods today and just have fun on ur special day!! stay healthy stay happy stay cool and stay goated as always mi wife i love u so so much and i pray only happiness and good things will come surround u always 🤍🤍🤍❤️‍🩹❤️‍🩹 happiest birthday my leilei i love you so much
-  </p>
-  <img src="birthday.jpg" alt="Birthday Image">
-  <audio id="birthdayAudio">
-    <source src="birthday.mp3" type="audio/mpeg">
-  </audio>
-</div>
+    <div id="game-container">
+        <h1>LEI'S 23RD BIRTHDAY BASH</h1>
+        <div id="counter">Clicks: <span id="clicks">0</span> / 23</div>
+        <div id="main-balloon">🎈</div>
+        <p style="font-weight: bold; color: var(--martini-blue); opacity: 0.8;">Pop the balloon to see your wish!</p>
+    </div>
 
-<script>
-let count = 0;
-const maxClicks = 23;
-const balloon = document.getElementById('balloon');
-const counter = document.getElementById('counter');
-const wish = document.getElementById('wish');
-const audio = document.getElementById('birthdayAudio');
+    <div id="wish-container">
+        <img src="birthday.jpg" id="birthday-pic">
+        <div class="wish-content">to… my beloved #martini blue truther, the sweetest, most precious, the loveliest wife, nae saranghaneun lei 🥹 happy birthdayyyy wife 🎂🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵🩵 congratulations ure one step closer to becoming an oldkeukeu now 🩵🙏🩵🙏🩵🙏🩵🙏🩵🙏🩵🙏🩵🙏🩵🩵🩵🩵🩵🩵🩵🩵 idgaf if ive said this before but im super super grateful to have known u, and actually have u as one of my jinjja closest friends here… like i really really do appreciate u a lot. just realised i dont say this to u a lot but im truly happier to have u, u make everything 9283827 more fun and all and i really appreciate that ☹️ im just happy i can always bs w u and all that yeah im so comfortable w u and u mean so soooo much to me and i reallyyyyy hope this bond stays forever 🤲🏻🩷 i really hope this year treats u gently w kindness and warmth and i hope u will achieve every single good thing this universe can offer to you 🥺🥺 i hope u eat lots and lotsss of delish foods today and just have fun on ur special day!! stay healthy stay happy stay cool and stay goated as always mi wife i love u so so much and i pray only happiness and good things will come surround u always 🤍🤍🤍❤️‍🩹❤️‍🩹 happiest birthday my leilei i love you so much</div>
+    </div>
 
-balloon.addEventListener('click', () => {
-    if(count < maxClicks) {
-        count++;
-        counter.textContent = count;
+    <audio id="bg-music" src="birthday.mp3" preload="auto"></audio>
 
-        // balloon pops up slightly on click
-        balloon.style.transform = "scale(1.3)";
-        setTimeout(() => {
-            balloon.style.transform = "scale(1)";
-        }, 100);
+    <script>
+        let count = 0;
+        const music = document.getElementById('bg-music');
+        const gameContainer = document.getElementById('game-container');
+        const wishContainer = document.getElementById('wish-container');
 
-        // when counter reaches 23
-        if(count === maxClicks){
-            balloon.textContent = "💥"; // balloon pops
-
-            // create confetti
-            for(let i=0; i<100; i++){
-                const confetti = document.createElement("div");
-                confetti.classList.add("confetti");
-                confetti.style.left = Math.random() * window.innerWidth + "px";
-                confetti.style.backgroundColor = `hsl(${Math.random()*240}, 100%, 50%)`;
-                confetti.style.width = confetti.style.height = Math.random()*10+5 + "px";
-                document.body.appendChild(confetti);
-                setTimeout(()=>{ confetti.remove(); }, 3000);
-            }
-
-            // show wish, image, and play music at the same time
-            setTimeout(() => {
-                balloon.style.display = 'none';
-                wish.style.display = 'block';
-                audio.play();
-            }, 500);
+        function startExperience() {
+            document.getElementById('overlay').style.display = 'none';
+            // Prime the audio engine
+            music.play().then(() => {
+                music.pause();
+                music.currentTime = 0;
+            }).catch(() => {});
+            createDecorBalloons();
         }
-    }
-});
-</script>
 
+        function createDecorBalloons() {
+            const symbols = ['🎈', '🩵', '💙', '✨'];
+            for(let i=0; i<15; i++) {
+                setTimeout(() => {
+                    const b = document.createElement('div');
+                    b.className = 'decor-balloon';
+                    b.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+                    b.style.left = Math.random() * 100 + 'vw';
+                    b.style.animationDuration = (Math.random() * 5 + 5) + 's';
+                    document.body.appendChild(b);
+                }, i * 300);
+            }
+        }
+
+        document.getElementById('main-balloon').addEventListener('click', function() {
+            count++;
+            document.getElementById('clicks').innerText = count;
+
+            if (count === 23) {
+                this.innerHTML = "💥";
+                music.play();
+                setTimeout(() => {
+                    // This hides the entire top title and counter
+                    gameContainer.style.display = 'none';
+                    wishContainer.style.display = 'block';
+                    // Allow scrolling if the wish is long
+                    document.body.style.overflowY = 'auto';
+                }, 500);
+            }
+        });
+    </script>
 </body>
 </html>
